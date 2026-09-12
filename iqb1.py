@@ -93,3 +93,60 @@ print(seq1_aligned)
 print(match_line) 
 print(seq2_aligned) 
                                          
+#doing 1.e: independently reconstruct the optimal local alignment(s) using the traceback path
+print("\ne. Independently reconstruct the optimal local alignment "
+      "using the traceback path:")
+
+reconstructed1 = []
+reconstructed2 = []
+
+for i in range(len(visited_path) - 1):
+
+    row, col = visited_path[i]
+    next_row, next_col = visited_path[i + 1]
+
+    # Diagonal move
+    if next_row == row - 1 and next_col == col - 1:
+        reconstructed1.append(seq1[row - 1])
+        reconstructed2.append(seq2[col - 1])
+
+    # Up move
+    elif next_row == row - 1:
+        reconstructed1.append(seq1[row - 1])
+        reconstructed2.append("-")
+
+    # Left move
+    elif next_col == col - 1:
+        reconstructed1.append("-")
+        reconstructed2.append(seq2[col - 1])
+
+# Reverse because traceback moves backwards
+reconstructed1.reverse()
+reconstructed2.reverse()
+
+print("Sequence 1:", "".join(reconstructed1))
+print("Sequence 2:", "".join(reconstructed2))
+
+
+print("\nIndependent verification of the alignment score:")
+
+recomputed_score = 0
+
+for base1, base2 in zip(reconstructed1, reconstructed2):
+
+    if base1 == "-" or base2 == "-":
+        recomputed_score += gap_penalty
+
+    elif base1 == base2:
+        recomputed_score += match
+
+    else:
+        recomputed_score += mismatch_penalty
+
+print("Alignment:", "".join(reconstructed1), "/", "".join(reconstructed2))
+print("Recomputed score:", recomputed_score)
+
+#doing 1.f: Why local alignment can ignore unmatched regions at the beginning or end of the alignment?
+print("\nf: Why local alignment can ignore unmatched regions at the beginning or end of the alignment?")
+print("\nLocal alignment is used only to find the shared regions between two sequences. Therefore, unmatched characters at the beginning or end can simply be ignored instead of being penalized.")
+print("In the Smith-Waterman, the score can restart from 0, allowing the alignment to start and end whenever the best match occurs.")
