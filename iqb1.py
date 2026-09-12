@@ -74,3 +74,28 @@ print("\nc.local alignment:")
 print("Sequence 1:", "".join(alignment1))
 print("Sequence 2:", "".join(alignment2))
 print("\nvisited path from max score position:", visited_path)
+
+#doing 1.d: Report the optimal local alignment(s), using a vertical bar (|) for a match and a hyphen (−) for a
+#gap.   
+print("\nd.optimal local alignment(s), using a vertical bar (|) for a match and a hyphen (−) for a gap:")
+print("Sequence 1:", "".join(alignment1))
+print("Sequence 2:", "".join(alignment2))
+
+#doing 1.e: Report the optimal local alignment
+print("\ne. Optimal local alignment:") 
+seq1_aligned = "".join(alignment1) 
+seq2_aligned = "".join(alignment2) 
+
+match_line = "" 
+for base1, base2 in zip(seq1_aligned, seq2_aligned): 
+    if base1 == "-" or base2 == "-": 
+        match_line += "-" 
+    elif base1 == base2: 
+        match_line += "|" 
+    else: 
+        match_line += " " 
+
+print(seq1_aligned) 
+print(match_line) 
+print(seq2_aligned) 
+                                         
