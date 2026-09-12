@@ -128,21 +128,24 @@ print("\nVisited path from maximum score position:")
 print(visited_path)
 
 
-#doing 1.d: Report the optimal local alignment 
-print("\nd. Optimal local alignment:") 
-seq1_aligned = "".join(alignment1) 
-seq2_aligned = "".join(alignment2) 
-match_line = "" 
-for base1, base2 in zip(seq1_aligned, seq2_aligned): 
-    if base1 == "-" or base2 == "-": 
-        match_line += "-" 
-    elif base1 == base2: 
-        match_line += "|" 
-    else: 
-        match_line += " " 
-        
-print(seq1_aligned) 
-print(match_line) 
+#doing 1.d: Report the optimal local alignment
+
+print("\nd. Optimal local alignment:")
+
+seq1_aligned = "".join(alignment1)
+seq2_aligned = "".join(alignment2)
+match_line = ""
+
+for base1, base2 in zip(seq1_aligned, seq2_aligned):
+    if base1 == "-" or base2 == "-":
+        match_line += " "
+    elif base1 == base2:
+        match_line += "|"
+    else:
+        match_line += " "
+
+print(seq1_aligned)
+print(match_line)
 print(seq2_aligned)
 
 # doing 1.e: independently reconstructing the optimal local alignment
