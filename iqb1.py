@@ -41,9 +41,11 @@ print(score_table)
 
 #doing 1.b: finding the maximum score and its position
 max_score = np.max(score_matrix)
-max_pos = np.unravel_index(np.argmax(score_matrix), score_matrix.shape)
-print("\nb.maximum score:", max_score)
-print("position:", max_pos)
+
+max_positions = np.argwhere(score_matrix == max_score)
+
+print("\nb. Maximum score:", max_score)
+print("Positions:", [tuple(pos) for pos in max_positions])
 
 #doing 1.c: tracing back from the max score position until we reach a score of 0
 def traceback(max_row, max_col):
