@@ -52,7 +52,7 @@ def traceback(max_row, max_col):
     visited_path = [(max_row, max_col)]
     current_row = max_row
     current_col = max_col
-    while current_row > 0 and current_col > 0:
+    while current_row > 0 and current_col > 0 and direction_matrix[current_row][current_col] != 0:
         if direction_matrix[current_row][current_col] == 1:
             alignment1.append(seq1[current_row-1])
             alignment2.append(seq2[current_col-1])
