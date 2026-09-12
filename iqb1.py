@@ -75,14 +75,8 @@ print("Sequence 1:", "".join(alignment1))
 print("Sequence 2:", "".join(alignment2))
 print("\nvisited path from max score position:", visited_path)
 
-#doing 1.d: Report the optimal local alignment(s), using a vertical bar (|) for a match and a hyphen (−) for a
-#gap.   
-print("\nd.optimal local alignment(s), using a vertical bar (|) for a match and a hyphen (−) for a gap:")
-print("Sequence 1:", "".join(alignment1))
-print("Sequence 2:", "".join(alignment2))
-
-#doing 1.e: Report the optimal local alignment
-print("\ne. Optimal local alignment:") 
+#doing 1.d: Report the optimal local alignment
+print("\nd. Optimal local alignment:") 
 seq1_aligned = "".join(alignment1) 
 seq2_aligned = "".join(alignment2) 
 
