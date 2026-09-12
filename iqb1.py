@@ -45,3 +45,32 @@ max_pos = np.unravel_index(np.argmax(score_matrix), score_matrix.shape)
 print("\nb.maximum score:", max_score)
 print("position:", max_pos)
 
+#doing 1.c: tracing back from the max score position until we reach a score of 0
+def traceback(max_row, max_col):
+    alignment1 = []
+    alignment2 = []
+    visited_path = [(max_row, max_col)]
+    current_row = max_row
+    current_col = max_col
+    while current_row > 0 and current_col > 0:
+        if direction_matrix[current_row][current_col] == 1:
+            alignment1.append(seq1[current_row-1])
+            alignment2.append(seq2[current_col-1])
+            current_row -= 1
+            current_col -= 1
+        elif direction_matrix[current_row][current_col] == 2:
+            alignment1.append(seq1[current_row-1])
+            alignment2.append("-")
+            current_row -= 1
+        else:
+            alignment1.append("-")
+            alignment2.append(seq2[current_col-1])
+            current_col -= 1
+        visited_path.append((current_row, current_col))
+    return alignment1[::-1], alignment2[::-1], visited_path
+
+alignment1, alignment2, visited_path = traceback(max_pos[0], max_pos[1])
+print("\nc.local alignment:")
+print("Sequence 1:", "".join(alignment1))
+print("Sequence 2:", "".join(alignment2))
+print("\nvisited path from max score position:", visited_path)
