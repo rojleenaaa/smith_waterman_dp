@@ -147,6 +147,10 @@ for base1, base2 in zip(reconstructed1, reconstructed2):
 
 print("Alignment:", "".join(reconstructed1), "/", "".join(reconstructed2))
 print("Recomputed score:", recomputed_score)
+if recomputed_score == max_score:
+    print("PASS")
+else:
+    print("FAIL")
 
 #doing 1.f: Why local alignment can ignore unmatched regions at the beginning or end of the alignment?
 print("\nf: Why local alignment can ignore unmatched regions at the beginning or end of the alignment?")
