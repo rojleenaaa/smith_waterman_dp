@@ -11,7 +11,10 @@ gap_penalty = -2
 m, n = len(seq1), len(seq2)
 
 score_matrix = np.zeros((m+1, n+1), dtype=int)
+#The score matrix stores How good is the alignment at this position
+
 direction_matrix = np.zeros((m+1, n+1), dtype=int)
+#the directional matrix stores where did this score come from
 
 
 # doing 1.a: constructing local alignment matrix
@@ -57,17 +60,16 @@ print(score_table)
 
 # doing 1.b: finding the maximum score and its position
 
-max_score = np.max(score_matrix)
+max_score = np.max(score_matrix)#finds the max score
 
-max_pos = np.argwhere(score_matrix == max_score)
+max_pos = np.argwhere(score_matrix == max_score) #position of max score
 
 print("\nb. Maximum score:", max_score)
 
 print("Positions:", [tuple(pos) for pos in max_pos])
 
 
-# doing 1.c: tracing back from the maximum score position
-# until we reach a score of 0
+# doing 1.c: tracing back from the maximum score position until we reach a score of 0
 
 def traceback(max_row, max_col):
 
@@ -79,11 +81,7 @@ def traceback(max_row, max_col):
     current_row = max_row
     current_col = max_col
 
-    while (
-        current_row > 0
-        and current_col > 0
-        and direction_matrix[current_row][current_col] != 0
-    ):
+    while (current_row > 0 and current_col > 0 and direction_matrix[current_row][current_col] != 0):
 
         if direction_matrix[current_row][current_col] == 1:
 
@@ -109,7 +107,7 @@ def traceback(max_row, max_col):
 
         visited_path.append((current_row, current_col))
 
-    return alignment1[::-1], alignment2[::-1], visited_path
+    return alignment1[::-1], alignment2[::-1], visited_path #because we are tracing the visited path from the max score
 
 
 # Traceback from the first maximum-score position
@@ -162,24 +160,15 @@ for i in range(len(visited_path) - 1):
     row, col = visited_path[i]
     next_row, next_col = visited_path[i + 1]
 
-    # Diagonal move
-
     if next_row == row - 1 and next_col == col - 1:
-
         reconstructed1.append(seq1[row - 1])
         reconstructed2.append(seq2[col - 1])
 
-    # Up move
-
     elif next_row == row - 1:
-
         reconstructed1.append(seq1[row - 1])
         reconstructed2.append("-")
 
-    # Left move
-
     elif next_col == col - 1:
-
         reconstructed1.append("-")
         reconstructed2.append(seq2[col - 1])
 
@@ -202,20 +191,16 @@ recomputed_score = 0
 for base1, base2 in zip(reconstructed1, reconstructed2):
 
     if base1 == "-" or base2 == "-":
-
         recomputed_score += gap_penalty
 
     elif base1 == base2:
-
         recomputed_score += match
 
     else:
-
         recomputed_score += mismatch_penalty
 
 
-print("Alignment:", "".join(reconstructed1), "/",
-      "".join(reconstructed2))
+print("Alignment:", "".join(reconstructed1), "/", "".join(reconstructed2))
 
 print("Recomputed score:", recomputed_score)
 
