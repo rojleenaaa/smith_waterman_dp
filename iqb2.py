@@ -54,3 +54,62 @@ score_table = pd.DataFrame(
 
 print("b. global alignment matrix:")
 print(score_table)
+
+#doing 1.c: Report the optimal global alignment
+curr_row, curr_col = i-1, j-1
+aligned_seq1 = ""
+aligned_seq2 = ""
+
+while curr_row > 0 or curr_col >0:
+    if curr_row ==0:
+        aligned_seq1 = "-" + aligned_seq1
+        aligned_seq2 = seq2[curr_col - 1] + aligned_seq2
+        curr_col -= 1
+    elif curr_col == 0:
+        # Only seq1 bases remain -> must be gaps in seq2
+        aligned_seq1 = seq1[curr_row - 1] + aligned_seq1
+        aligned_seq2 = "-" + aligned_seq2
+        curr_row -= 1
+    elif direction_matrix[curr_row][curr_col] == 1:
+        aligned_seq1 = seq1[curr_row - 1] + aligned_seq1
+        aligned_seq2 = seq2[curr_col - 1] + aligned_seq2
+        curr_row -= 1
+        curr_col -= 1
+    elif direction_matrix[curr_row][curr_col] == 2:
+        aligned_seq1 = seq1[curr_row - 1] + aligned_seq1
+        aligned_seq2 = "-" + aligned_seq2
+        curr_row -= 1
+    else:
+        aligned_seq1 = "-" + aligned_seq1
+        aligned_seq2 = seq2[curr_col - 1] + aligned_seq2
+        curr_col -= 1
+ 
+match_line = ""
+for base1, base2 in zip(aligned_seq1, aligned_seq2):
+    if base1 == "-" or base2 == "-":
+        match_line += "-"
+    elif base1 == base2:
+        match_line += "|"
+    else:
+        match_line += " "  # mismatch
+ 
+final_score = int(score_matrix[i - 1][j - 1])
+ 
+print("\nc. Optimal global alignment:")
+print(aligned_seq1)
+print(match_line)
+print(aligned_seq2)
+print("Alignment score (from bottom-right cell of matrix):", final_score)
+ 
+# Independent check, recomputed directly from the aligned strings
+recomputed_score = 0
+for base1, base2 in zip(aligned_seq1, aligned_seq2):
+    if base1 == "-" or base2 == "-":
+        recomputed_score += gap_penalty
+    elif base1 == base2:
+        recomputed_score += match
+    else:
+        recomputed_score += mismatch_penalty
+print("Recomputed score from the alignment itself:", recomputed_score,
+      "| matches?", recomputed_score == final_score)
+ 
